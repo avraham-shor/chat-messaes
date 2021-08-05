@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add User</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <div class="site">
+        <div class="phone">
+            <div class="phone_mic"></div>
+            <div class="phone_screen" id="phone_screen">
+                <form method="post" id="register">
+                    <div class="row">
+                        <div>
+                            <label for="username">Type your User Name</label>
+                        </div>
+                        <div>
+                            <input type="text" name="username" id="username">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div>
+                            <label for="email">Type your Email</label>
+                        </div>
+                        <div>
+                            <input type="text" name="email" id="email">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>
+                            <label for="password">Type your Password</label>
+                        </div>
+                        <div>
+                            <input type="password" name="password" id="password">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>
+                            <label for="phone">Type your Phone Number</label>
+                        </div>
+                        <div>
+                            <input type="text" name="phone" id="phone">
+                        </div>
+                    </div>
+                    <button type="button" onclick="onSubmit()">Submit</button>
+                </form>
+            </div>
+            <div class="phone_button"></div>
+        </div>
+    </div>
+
+    <script src="add-user.js"></script>
+</body>
+
+</html>

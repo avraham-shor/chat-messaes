@@ -1,0 +1,64 @@
+version: '3.4'
+volumes:
+    mongodb:
+    mongodb_config:
+services: 
+    spring:
+        build: 
+            context: ./chat
+            dockerfile: ../docker/dockerfile-spring
+        container_name: spring
+        depends_on:
+            - mongoSpring
+        ports: 
+            - 8081:8080
+        command: java -jar /app/spring-application.jar
+    mongoSpring:
+        image: mongo:3.6.1
+        container_name: mongodb_spring
+        restart: always
+        volumes:
+            - mongodb:/data/db
+            - mongodb_config:/data/configdb
+        ports: 
+            - "27019:27017"
+        env_file:
+            - .env
+        command: mongod
+    mongo-express-spring:
+        image: mongo-express
+        container_name: mongo-express-spring
+        env_file:
+            - .env
+        volumes:
+            - mongodb:/data/db
+            - mongodb_config:/data/configdb
+        depends_on:
+            - mongoSpring
+        restart: always
+        ports:
+            - "8882:8081"
+    client:
+        build:
+            context: ./client
+            dockerfile: ../docker/dockerfile-html
+        image: client-chat
+        container_name: client-chatMessages
+        ports:
+            - 89:80
+        volumes:
+            - ./client:/usr/share/nginx/html
+        depends_on:
+            - spring
+    client2:
+        build:
+            context: ./client
+            dockerfile: ../docker/dockerfile-html
+        image: client-chat
+        container_name: client-chatMessages2
+        ports:
+            - 90:80
+        volumes:
+            - ./client:/usr/share/nginx/html
+        depends_on:
+            - spring

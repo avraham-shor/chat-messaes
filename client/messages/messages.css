@@ -1,0 +1,199 @@
+.site {
+    position: relative;
+    /* min-height: 100vh; */
+    padding: 2rem;
+    display: grid;
+    place-items: center;
+    background-color: #89d1bf;
+    max-height: 100vh;
+}
+
+.site::after {
+    position: absolute;
+    content: "";
+    display: block;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 50%;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.phone {
+    --black5: #404040;
+    --black4: #505050;
+
+    z-index: 1;
+    width: 26rem;
+    height: 55rem;
+    padding: 0 0.5rem;
+    border: 0.25rem solid var(--black5);
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    background-color: #eaeaea;
+    box-shadow: 0.5rem 0.5rem rgba(0, 0, 0, 0.3);
+    transition: all 0.3s;
+    max-height: 100vh;
+}
+
+.phone.-loooooong {
+    height: 100%;
+}
+
+.phone_mic {
+    height: 0.25rem;
+    width: 4rem;
+    margin: 1rem auto;
+    border-radius: 999rem;
+    background-color: var(--black4);
+}
+
+.phone_screen {
+    position: relative;
+    flex: 1 0 auto;
+    background-color: var(--black4);
+    max-height: 85vh !important;
+    overflow: scroll;
+}
+
+.phone_screen_msg {
+    position: relative;
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column-reverse;
+    background-color: var(--black4);
+    max-height: 65vh !important;
+    overflow: scroll;
+}
+
+.phone_screen_msg::-webkit-scrollbar {
+    display: none;
+  }
+
+  .phone_screen::-webkit-scrollbar {
+    display: none;
+  }
+
+.phone_screen::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    clip-path: polygon(70% 0, 100% 0%, 100% 100%, 30% 100%);
+}
+
+.phone_button {
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 2px solid var(--black4);
+    border-radius: 50%;
+    margin: 1rem auto;
+}
+.member {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    background-color: rgb(7, 169, 245);
+    box-shadow: 1px 1px #c0d3e6b0;
+    height: 3rem;
+    margin-bottom: 0.2rem;
+    padding: 0.2rem;
+}
+
+
+.member img {
+    width: 2rem;
+    margin: 0.6rem;
+    margin-right: 3.5rem;
+
+}
+
+.name-in-list {
+    font-size: 2.3rem;
+    color: white;
+    text-shadow: 0.5px 0.5px #96a50a;
+    border-radius: 10px;
+}
+
+.msg {
+    width: 50%;
+    margin: 1rem auto;
+    margin-top: 0.1rem;
+    border-radius: 20px;
+    padding: 1rem;
+}
+
+.msg-sent {
+    background-color: rgb(7, 169, 245);
+    margin-left: 40%;
+}
+
+.msg-received {
+    background-color: yellow;
+    margin-right: 40%;
+}
+
+.time {
+    font-size: 0.8rem;
+    color: aliceblue;
+    
+}
+
+.time-sent {
+    margin-left: 50%;
+}
+
+.time-received {
+    margin-left: 8%;
+}
+
+.writer-box {
+    position: inherit;
+    bottom: -0.2vh;
+    width: 26rem;
+    background-color: gray;
+    height: 14vh;
+    line-height: 13;
+    display: flex;
+}
+
+.writer {
+    margin: 4%;
+    border: solid 2px rgb(7, 169, 245);
+}
+
+.icon-box {
+    margin: 4%;
+    margin-left: 0%;
+    width: 5rem;
+    height: 10.3vh;
+    background-color: white;
+}
+
+.icon-send {
+    height: 4vh;
+    margin: 10%;
+    background-size: cover;
+    background-clip: unset;
+    background-repeat: round;
+    width: 3.6rem;
+}
+
+.icon-send:hover {
+    border: solid 1px rgb(7, 169, 245);
+}
+
+.back {
+    margin-left: 8rem;
+    width: 2rem;
+    background: rgba(230, 225, 225, 0.3);
+    font-size: 2rem;
+    color: blueviolet;
+    font-weight: 900;
+    z-index: 100;
+}

@@ -1,0 +1,15 @@
+FROM maven AS builder
+
+WORKDIR /home/maven/src
+
+COPY . .
+
+RUN mvn package
+
+FROM openjdk
+
+EXPOSE 8080
+
+WORKDIR /app
+
+COPY --from=builder /home/maven/src/target/*.jar /app/spring-application.jar
