@@ -1,6 +1,8 @@
 class MyHttp {
     Http = new XMLHttpRequest();
-    baseUrl = 'http://localhost:8081/api/messages';
+    // baseUrl = 'http://localhost:8081/api/messages';
+    baseUrl = 'http://localhost:8080/api/messages';
+
 
     sendHttp(endPoint, type, body) {
         const url = this.baseUrl + endPoint;
@@ -20,7 +22,7 @@ getMessages();
 
 setInterval(function () {
     checkIfNewMessage();
-}, 3000);
+}, 33000);
 
 function getMessages() {
     this.myHttp = new MyHttp();

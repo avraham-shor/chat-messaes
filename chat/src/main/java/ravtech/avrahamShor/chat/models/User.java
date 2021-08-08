@@ -7,10 +7,8 @@ import org.springframework.data.annotation.Id;
 
 @Data
 @NoArgsConstructor
-public class User  {
+public class User extends ObjectId  {
 
-    @Id
-    private String id;
     private String username, email, password;
 
     public User(String username, String email, String password) {

@@ -13,6 +13,7 @@ services:
         ports: 
             - 8081:8080
         command: java -jar /app/spring-application.jar
+        restart: always
     mongoSpring:
         image: mongo:3.6.1
         container_name: mongodb_spring
@@ -50,6 +51,7 @@ services:
             - ./client:/usr/share/nginx/html
         depends_on:
             - spring
+        restart: always
     client2:
         build:
             context: ./client
@@ -62,3 +64,4 @@ services:
             - ./client:/usr/share/nginx/html
         depends_on:
             - spring
+        restart: always

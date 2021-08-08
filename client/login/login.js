@@ -1,6 +1,7 @@
 class MyHttp {
     Http = new XMLHttpRequest();
-    baseUrl = 'http://localhost:8081/api/users/';
+    // baseUrl = 'http://localhost:8081/api/users/';
+    baseUrl = 'http://localhost:8080/api/users/';
 
     sendHttp(endPoint, type, body) {
         const url = this.baseUrl + endPoint;

@@ -11,10 +11,8 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 //@RequiredArgsConstructor
-public abstract class BaseMessage {
+public abstract class BaseMessage extends ObjectId {
 
-    @Id
-    private String id;
     private Date date;
     private String dateTime;
     @NonNull
