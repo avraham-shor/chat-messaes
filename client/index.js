@@ -1,19 +1,3 @@
-class MyHttp {
-    Http = new XMLHttpRequest();
-    // baseUrl = 'http://localhost:8081/api/'; ////docker
-    baseUrl = 'http://localhost:8080/api/'; //localhost
-
-    sendHttp(endPoint, type, userId) {
-        console.log(userId);
-        const url = this.baseUrl + endPoint;
-        this.Http.open(type, url);
-        this.Http.setRequestHeader('Content-Type', 'application/json');
-        this.Http.send();
-    }
-}
-
-
-
 const userId = window.localStorage.getItem('userId');
 console.log(userId, isNaN(+userId), 'userId is null or undefined');
 if(userId == null || userId == undefined || userId.length < 10) {
@@ -32,7 +16,7 @@ getUsers();
 function getUsers() {
     const phone_screen = document.getElementById('phone_screen');
     console.log(userId);
-    myHttp.sendHttp('users', "GET", userId);
+    myHttp.sendHttp('users', "GET");
     myHttp.Http.onreadystatechange = function () {
         if (myHttp.Http.readyState == 4 && myHttp.Http.status == 200) {
             const response = JSON.parse(myHttp.Http.responseText);
@@ -72,18 +56,6 @@ function getUsers() {
     }
 
 }
-
-
-
-
-
-
-
-function User(id, username) {
-    this.id = id;
-    this.username = username;
-}
-
 
 
 window.addEventListener("click", () => {

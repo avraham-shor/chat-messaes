@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="login.css">
 </head>
 
 <body>
@@ -14,6 +14,10 @@
         <div class="phone">
             <div class="phone_mic"></div>
             <div class="phone_screen" id="phone_screen">
+                <div class="selector">
+                    <div class="select active">Login</div>
+                    <div class="select non-active" onclick="location.href = '../add-user/add-user.html' ">Register</div>
+                </div>
                 <form method="post" id="login">
                     <div class="row">
                         <div>
@@ -40,7 +44,11 @@
         </div>
     </div>
 
+    <script src="../configuration.js"></script>
+    <script src="../helpers/http-server.js"></script>
     <script src="login.js"></script>
+    <script src="../models/user-model.js"></script>
+   
 </body>
 
 </html>

@@ -117,13 +117,20 @@
     margin: 1rem auto;
 }
 
+
+.phone_button {
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 2px solid var(--black4);
+    border-radius: 50%;
+    margin: 1rem auto;
+}
+
+
 form {
-    /* Center the form on the page */
     font-size: 20px;
     margin-top: 10vh;
-    width: 700px;
-    /* Form outline */
-    padding: 1em;
+    padding: 2em;
     border: 1px solid #CCC;
     border-radius: 1rem;
     
@@ -139,11 +146,6 @@ form {
     width: 300px
     }
     
-    
-    /* input:focus,
-    textarea:focus {
-    border-color: #000;
-    } */
     
     button {
     margin-top: 2rem;

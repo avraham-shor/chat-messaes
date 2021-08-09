@@ -1,20 +1,19 @@
-class MyHttp {
-    Http = new XMLHttpRequest();
-    // baseUrl = 'http://localhost:8081/api/messages';
-    baseUrl = 'http://localhost:8080/api/messages';
+// class MyHttp {
+//     Http = new XMLHttpRequest();
+//     baseUrl = BASE_URL;
 
 
-    sendHttp(endPoint, type, body) {
-        const url = this.baseUrl + endPoint;
-        this.Http.open(type, url);
-        this.Http.setRequestHeader('Content-Type', 'application/json');
-        this.Http.send(body);
-    }
-}
+//     sendHttp(endPoint, type, body) {
+//         const url = this.baseUrl + endPoint;
+//         this.Http.open(type, url);
+//         this.Http.setRequestHeader('Content-Type', 'application/json');
+//         this.Http.send(body);
+//     }
+// }
 const userId = getStorItems('userId');
 console.log(userId);
 if (!userId || userId.length < 10) {
-    location.href = "login/login.html";
+    location.href = "../login/login.html";
 }
 
 
@@ -22,13 +21,13 @@ getMessages();
 
 setInterval(function () {
     checkIfNewMessage();
-}, 33000);
+}, 3000);
 
 function getMessages() {
     this.myHttp = new MyHttp();
     const receiverId = getStorItems('message_user_id');
     const name = getStorItems('message_user_name');
-    myHttp.sendHttp('/' + userId + '/' + receiverId, "GET");
+    myHttp.sendHttp('messages/' + userId + '/' + receiverId, "GET");
     const username = dId('user_name');
     username.innerText = name;
     const phone = dId('phone_screen_msg');
@@ -79,7 +78,7 @@ function sendMessage(text, senderId, receiverId) {
     const message = new Message(text, senderId, receiverId);
     console.log(message);
     jsonMsg = JSON.stringify(message);
-    myHttp.sendHttp("", "POST", jsonMsg);
+    myHttp.sendHttp("messages/", "POST", jsonMsg);
     myHttp.Http.onreadystatechange = function () {
         console.log(myHttp.Http.responseText);
         window.location.reload();
@@ -90,9 +89,9 @@ function sendMessage(text, senderId, receiverId) {
 function checkIfNewMessage() {
     this.myHttp = new MyHttp();
     const anotherId = getStorItems('message_user_id');
-    myHttp.sendHttp(`/count/${anotherId}/${userId}`, "GET");
+    myHttp.sendHttp(`messages/count/${anotherId}/${userId}`, "GET");
     myHttp.Http.onreadystatechange = function () {
-        console.log(myHttp.Http.responseText);
+        // console.log(myHttp.Http.responseText);
         if (myHttp.Http.readyState == 4 && myHttp.Http.status == 200) {
             const count = JSON.parse(myHttp.Http.responseText);
             oldCount = getStorItems(`messages_user_${anotherId}_count`);
@@ -100,7 +99,7 @@ function checkIfNewMessage() {
             if (oldCount && count > oldCount) {
                 // let audio = dId('audio');
                 // audio.play();
-                getMessages();
+                window.location.reload();
             }
             window.localStorage.setItem(`messages_user_${anotherId}_count`, count);
 
@@ -117,12 +116,3 @@ function dId(param) {
     return document.getElementById(param);
 }
 
-
-
-class Message {
-    constructor(text, senderId, receiverId) {
-        this.text = text;
-        this.senderId = senderId;
-        this.receiverId = receiverId;
-    }
-}

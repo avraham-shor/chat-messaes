@@ -1,16 +1,3 @@
-class MyHttp {
-    Http = new XMLHttpRequest();
-    // baseUrl = 'http://localhost:8081/api/';
-    baseUrl = 'http://localhost:8080/api/';
-
-    sendHttp(endPoint, type, body) {
-        const url = this.baseUrl + endPoint;
-        this.Http.open(type, url);
-        this.Http.setRequestHeader('Content-Type', 'application/json');
-        this.Http.send(body);
-    }
-}
-
 const myHttp = new MyHttp();
 
 function onSubmit(e) {
@@ -24,19 +11,19 @@ function onSubmit(e) {
     jsonRegister = JSON.stringify(register);
 
     myHttp.sendHttp('users', 'POST', jsonRegister);
-    myHttp.Http.onreadystatechange = function () {
-        console.log(myHttp.Http.responseText);
-        setTimeout(function (){
-            location.href = "../index.html";
-        }, 3000);
-        
+    if (myHttp.Http.readyState == 4) {
+        if (myHttp.Http.status == 200) {
+            myHttp.Http.onreadystatechange = function () {
+                console.log(myHttp.Http.responseText);
+                setTimeout(function () {
+                    location.href = "../index.html"
+                }, 3000);
+            }
+        }
+        else {
+            console.log('myHttp.Http.status', myHttp.Http.status);
+        }
+
+
     }
-}
-
-
-function Register(username, email, password, phone) {
-    this.username = username;
-    this.email = email;
-    this.password = password;
-    this.phone = phone;
 }
