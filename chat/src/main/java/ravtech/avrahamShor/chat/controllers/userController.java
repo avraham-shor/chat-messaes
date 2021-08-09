@@ -36,6 +36,9 @@ public class userController {
     @PostMapping("")
     public ResponseEntity<PhoneUser> createUsers(@RequestBody  PhoneUser user) {
         System.out.println(user);
+        if (isEmailExist(user.getEmail())) {
+            return new ResponseEntity<>(null, HttpStatus.CONFLICT);
+        }
         try {
             PhoneUser _user = userRepository.save(user);
             return new ResponseEntity<>(_user, HttpStatus.CREATED);
@@ -53,5 +56,13 @@ public class userController {
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
+    }
+
+    private boolean isEmailExist(String email) {
+        int contain = userRepository.findByEmail(email).size();
+        if (contain == 0) {
+            return false;
+        }
+        return true;
     }
 }
