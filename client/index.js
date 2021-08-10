@@ -10,7 +10,7 @@ function getUsers() {
     myHttp.Http.onreadystatechange = function () {
         if (myHttp.Http.readyState == 4 && myHttp.Http.status == 200) {
             const response = JSON.parse(myHttp.Http.responseText);
-        console.log(response);
+            console.log(response);
             response.forEach(element => {
                 let user = new User();
                 console.log(element);
@@ -24,7 +24,7 @@ function getUsers() {
                 img.src = '../images/pngwing.com (1).png';
                 const listName = document.createElement('div');
                 listName.className = 'name-in-list';
-                
+
                 const text = document.createTextNode(user.username);
                 listName.appendChild(text);
                 member.appendChild(img);
@@ -32,8 +32,8 @@ function getUsers() {
                 phone_screen.appendChild(member);
 
                 member.addEventListener('click', function () {
-                    setStorItems('message_user_id',user.id);
-                    setStorItems('message_user_name',user.username);
+                    setStorItems('message_user_id', user.id);
+                    setStorItems('message_user_name', user.username);
                     location.href = "messages/messages.html";
                 })
             });

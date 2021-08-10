@@ -1,47 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Messages</title>
-        <link rel="stylesheet" href="messages.css">
-    </head>
-    
-    <body>
-        <div class="site">
-            <div class="phone">
-                <div class="phone_mic"></div>
-                <div class="phone_screen" id="phone_screen">
-                    <div class="member">
-                        <img src="../../images/pngwing.com (1).png">
-                        <div class="name-in-list" id="user_name"></div>
-                        <button type="button" class="back" onclick="location.href = '../index.html'">></button>
-                    </div>
-                    <div class="phone_screen_msg" id="phone_screen_msg">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages</title>
+    <link rel="stylesheet" href="messages.css">
+</head>
+
+<body>
+    <div class="site">
+        <div class="phone">
+            <div class="phone_mic"></div>
+            <div class="phone_screen" id="phone_screen">
+                <div class="member">
+                    <img src="../../images/pngwing.com (1).png">
+                    <div class="name-in-list" id="user_name"></div>
+                    <button type="button" class="back" onclick="location.href = '../index.html'">></button>
+                </div>
+                <div class="phone_screen_msg" id="phone_screen_msg">
                 </div>
                 <div class="writer-box">
                     <textarea class="writer" name="writer" id="writer" cols="43" rows="6"></textarea>
                     <div class="icon-box">
-                        <div class="icon-send" id="send" style="background-image: url(../../images/paper-plane.png);"></div>
-                        <div class="icon-send" style="background-image: url(../../images/log-out.png);" onclick="window.location.href = '../login/login.html' "></div>
+                        <div class="icon-send" id="send" style="background-image: url(../../images/paper-plane.png);">
+                        </div>
+                        <div class="icon-send" style="background-image: url(../../images/log-out.png);"
+                            onclick="window.location.href = '../login/login.html' "></div>
                     </div>
                 </div>
             </div>
-                <div class="phone_button"></div>
-            </div>
+            <div class="phone_button"></div>
         </div>
+    </div>
     <!-- <audio id="audio" controls autoplay>
         <source src="../../../../../images/new_message.ogg" type="audio/ogg">
         <source src="../../../../../images/new_message.mp3" type="audio/mpeg">
       Your browser does not support the audio element.
       </audio> -->
-      <script src="../helpers/short-foncsions.js"></script>
-      <script src="../configuration.js"></script>
-      <script src="../helpers/http-server.js"></script>
-      <script src="../models/message-model.js"></script>
-      <script src="messages.js"></script>
-        
-    </body>
+    <script src="../helpers/short-foncsions.js"></script>
+    <script src="../configuration.js"></script>
+    <script src="../helpers/http-server.js"></script>
+    <script src="../models/message-model.js"></script>
+    <script src="messages.js"></script>
+
+</body>
 
 </html>
