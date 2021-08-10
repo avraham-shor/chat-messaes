@@ -111,14 +111,14 @@
     justify-content: flex-start;
     margin-top: 0.5rem;
     border: 3px solid rgba(15, 15, 14, 0.550);
-    background-color: gray;
+    background-color: rgb(95, 207, 241);
     box-shadow: 1px 1px #ffffffb0;
     cursor: pointer;
     height: 3rem;
 }
 
 .member:hover {
-    background-color: rgb(185 185 102 / 28%);
+    background-color: rgb(7, 169, 245);
     color: black;
     height: 3.1;
     
