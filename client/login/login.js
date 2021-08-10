@@ -2,32 +2,24 @@
 const myHttp = new MyHttp();
 
 function onSubmit(e) {
-    const d = document;
-    const email = d.getElementById('email').value;
-    const password = d.getElementById('password').value;
+    const email = byId('email').value;
+    const password = byId('password').value;
     console.log(email, password);
     const loginUser = new LoginUser(email, password);
     jsonLoginUser = JSON.stringify(loginUser);
-
     myHttp.sendHttp("users/login", "POST", jsonLoginUser);
-
-    if (myHttp.Http.readyState == 4 && myHttp.Http.status == 200 || true) {
-        myHttp.Http.onreadystatechange = function () {
+    myHttp.Http.onreadystatechange = function () {
+        if (myHttp.Http.readyState == 4 && myHttp.Http.status == 200) {
             let user = new User();
             user = JSON.parse(myHttp.Http.responseText);
             console.log(user.id);
-            console.log(user.username);  
-
-            window.localStorage.setItem('userId', user.id);
-            window.localStorage.setItem('userName', user.username);
-            setTimeout(function (){
-                location.href = "../index.html";
-            }, 3000);
-            
+            console.log(user.username);
+            setStorItems('userId', user.id);
+            setStorItems('userName', user.username);
+            location.href = "../index.html";
+        }
+        else {
+            printError('pass', 'One or more parameters are incorrect!');
         }
     }
-    // else {
-    //     console.log("LOGIN FAILED!");
-    // }
 }
-
