@@ -1,22 +1,3 @@
-// class MyHttp {
-//     Http = new XMLHttpRequest();
-//     baseUrl = BASE_URL;
-
-
-//     sendHttp(endPoint, type, body) {
-//         const url = this.baseUrl + endPoint;
-//         this.Http.open(type, url);
-//         this.Http.setRequestHeader('Content-Type', 'application/json');
-//         this.Http.send(body);
-//     }
-// }
-const userId = getStorItems('userId');
-console.log(userId);
-if (!userId || userId.length < 10) {
-    location.href = "../login/login.html";
-}
-
-
 getMessages();
 
 setInterval(function () {
@@ -27,10 +8,10 @@ function getMessages() {
     this.myHttp = new MyHttp();
     const receiverId = getStorItems('message_user_id');
     const name = getStorItems('message_user_name');
-    myHttp.sendHttp('messages/' + userId + '/' + receiverId, "GET");
-    const username = dId('user_name');
+    myHttp.sendHttp('messages/' + USER_ID + '/' + receiverId, "GET");
+    const username = byId('user_name');
     username.innerText = name;
-    const phone = dId('phone_screen_msg');
+    const phone = byId('phone_screen_msg');
     phone.innerText = '';
     myHttp.Http.onreadystatechange = function () {
         if (myHttp.Http.readyState == 4 && myHttp.Http.status == 200) {
@@ -67,10 +48,10 @@ function getMessages() {
     }
 
 
-    const send = dId('send');
-    const writerText = dId('writer');
+    const send = byId('send');
+    const writerText = byId('writer');
     send.addEventListener('click', function () {
-        sendMessage(writerText.value, userId, receiverId);
+        sendMessage(writerText.value, USER_ID, receiverId);
     })
 };
 
@@ -89,15 +70,14 @@ function sendMessage(text, senderId, receiverId) {
 function checkIfNewMessage() {
     this.myHttp = new MyHttp();
     const anotherId = getStorItems('message_user_id');
-    myHttp.sendHttp(`messages/count/${anotherId}/${userId}`, "GET");
+    myHttp.sendHttp(`messages/count/${anotherId}/${USER_ID}`, "GET");
     myHttp.Http.onreadystatechange = function () {
-        // console.log(myHttp.Http.responseText);
         if (myHttp.Http.readyState == 4 && myHttp.Http.status == 200) {
             const count = JSON.parse(myHttp.Http.responseText);
             oldCount = getStorItems(`messages_user_${anotherId}_count`);
             console.log('count', count, 'oldCount', oldCount);
             if (oldCount && count > oldCount) {
-                // let audio = dId('audio');
+                // let audio = byId('audio');
                 // audio.play();
                 window.location.reload();
             }
@@ -106,13 +86,5 @@ function checkIfNewMessage() {
         }
 
     }
-}
-
-function getStorItems(param) {
-    return localStorage.getItem(param);
-}
-
-function dId(param) {
-    return document.getElementById(param);
 }
 

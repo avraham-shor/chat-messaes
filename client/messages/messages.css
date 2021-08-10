@@ -182,6 +182,7 @@
     background-clip: unset;
     background-repeat: round;
     width: 3.6rem;
+    color: black;
 }
 
 .icon-send:hover {
@@ -189,7 +190,7 @@
 }
 
 .back {
-    margin-left: 8rem;
+    margin-left: 11rem;
     width: 2rem;
     background: rgba(230, 225, 225, 0.3);
     font-size: 2rem;
