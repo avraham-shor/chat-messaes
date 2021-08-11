@@ -31,4 +31,9 @@ public class messageController {
     public ResponseEntity<Message> createMessage(@RequestBody  Message msg) {
         return service.save(msg);
     }
+
+    @DeleteMapping("/{messageId}")
+    public ResponseEntity<String> delete(@PathVariable("messageId") String messageId) {
+        return service.delete(messageId);
+    }
 }

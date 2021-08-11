@@ -1,15 +1,10 @@
 package ravtech.avrahamShor.chat.services;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 import ravtech.avrahamShor.chat.models.ObjectId;
 
 import java.text.SimpleDateFormat;
@@ -18,18 +13,18 @@ import java.util.Date;
 import java.util.List;
 
 
-//@Service
-//@Configurable
-//@Data
-//@AllArgsConstructor
 @Repository
-//@NoArgsConstructor
 
-public abstract class BaseService<T extends ObjectId, U extends MongoRepository<T,String>> {
+public abstract class BaseService<T extends ObjectId, U extends MongoRepository<T, String>> {
 
     @Autowired
     protected U repo;
 
+    public static String getFormatDate() {
+        String pattern = "dd/MM/YYYY HH:mm:ss";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        return simpleDateFormat.format(new Date());
+    }
 
     public ResponseEntity<List<T>> getAll() {
         try {
@@ -57,10 +52,17 @@ public abstract class BaseService<T extends ObjectId, U extends MongoRepository<
         }
     }
 
-    public static String getFormatDate() {
-        String pattern = "dd/MM/YYYY HH:mm:ss";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-        return simpleDateFormat.format(new Date());
+    public ResponseEntity<String> delete(String id) {
+
+        if (id == null) {
+            return new ResponseEntity<>(id, HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        if (!repo.existsById(id)) {
+            return new ResponseEntity<>(id, HttpStatus.NOT_FOUND);
+        }
+        repo.deleteById(id);
+        return new ResponseEntity<>(id, HttpStatus.OK);
+
     }
 }
 

@@ -16,7 +16,7 @@ public class UserService extends BaseService<PhoneUser, UserRepository> {
     public ResponseEntity<PhoneUser> login(PhoneUser user) {
         System.out.println(user);
         try {
-            PhoneUser _user = repo.findByEmailAndPassword(user.getEmail(), user.getPassword()).get(0);
+            PhoneUser _user = repo.findPhonUserByEmailAndPassword(user.getEmail(), user.getPassword());
             return new ResponseEntity<>(_user, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
