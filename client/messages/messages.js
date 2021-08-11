@@ -34,6 +34,27 @@ function getMessages() {
                 }
 
                 msg.appendChild(text);
+                msg.addEventListener('dblclick', function () {
+                    const m = message.text;
+                    const dropdown = createDiv('dropdown', 'dropdown-menu');
+                    const deleteMsg = createDiv('deleteMsg', 'dropdown');
+                    const editMsg = createDiv('editMsg', 'dropdown');
+                    dropdown.appendChild(deleteMsg);
+                    dropdown.appendChild(editMsg);
+                    deleteMsg.innerText = 'Delete message';
+                    editMsg.innerText = 'Edit message';
+                        msg.appendChild(dropdown);
+                        deleteMsg.addEventListener('click', function () {
+                            if (confirm('Are you sure that you want delete msg ' + m + ' ?')) {
+                                myHttp.sendHttp('messages/' + message.id, 'DELETE');
+                                window.location.reload();
+                            }
+                        });
+
+                        editMsg.addEventListener('click', function () {
+                            alert('edit msg: ' + m);
+                        });
+                });
                 phone.appendChild(msg);
                 phone.appendChild(time);
             });

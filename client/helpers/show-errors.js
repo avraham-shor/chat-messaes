@@ -14,3 +14,10 @@ function printError(locationInHtml, msg) {
     error.innerText = 'Error: ' + msg;
     location.appendChild(error);
 }
+
+function createDiv(id, className) {
+    const div = document.createElement('div');
+    div.className = className;
+    div.id = id;
+    return div;
+}
