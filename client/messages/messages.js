@@ -20,9 +20,9 @@ function getMessages() {
                 let message = new Message();
                 message = element;
                 let text = document.createTextNode(message.text);
-                const time = document.createElement('div');
+                const time = createDiv('time', 'time');
                 time.innerHTML = message.dateTime;
-                let msg = document.createElement('div');
+                let msg = createDiv('msg', 'msg');
 
                 if (message.senderId == receiverId) {
                     msg.className = 'msg msg-received';
