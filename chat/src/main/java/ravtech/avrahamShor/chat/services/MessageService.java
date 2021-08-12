@@ -33,11 +33,14 @@ public class MessageService extends BaseService<Message, MessageRepository>{
     }
 
     @Override
-    public ResponseEntity<Message> save(Message msg) {
-        Date date = new Date();
-        msg.setDate(date);
-        msg.setDateTime(getFormatDate());
-        return super.save(msg);
+    public ResponseEntity<Message> save(Message msg, String id) {
+        if (msg.getId() == null) {
+            Date date = new Date();
+            msg.setDate(date);
+            msg.setDateTime(getFormatDate());
+            return super.save(msg, null);
+        }
+        return super.save(msg, id);
     }
 
 }

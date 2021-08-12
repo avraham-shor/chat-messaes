@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -41,8 +42,12 @@ public abstract class BaseService<T extends ObjectId, U extends MongoRepository<
         }
     }
 
-    public ResponseEntity<T> save(T obj) {
+    public ResponseEntity<T> save(T obj, String id) {
         System.out.println(obj);
+        if (id != null) {
+            Optional<T> optionalT = repo.findById(id);
+            if (optionalT.isEmpty()) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
         try {
             T _obj = repo.save(obj);
             return new ResponseEntity<>(_obj, HttpStatus.CREATED);
@@ -64,6 +69,7 @@ public abstract class BaseService<T extends ObjectId, U extends MongoRepository<
         return new ResponseEntity<>(id, HttpStatus.OK);
 
     }
+
 }
 
 

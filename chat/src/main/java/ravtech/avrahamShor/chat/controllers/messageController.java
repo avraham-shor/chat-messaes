@@ -29,7 +29,12 @@ public class messageController {
 
     @PostMapping("")
     public ResponseEntity<Message> createMessage(@RequestBody  Message msg) {
-        return service.save(msg);
+        return service.save(msg, null);
+    }
+
+    @PutMapping("/{id}")
+    ResponseEntity<Message> editMessage(@RequestBody  Message msg, @PathVariable("id") String id) {
+        return service.save(msg, id);
     }
 
     @DeleteMapping("/{messageId}")

@@ -23,7 +23,7 @@ public class userController {
 
     @PostMapping("")
     public ResponseEntity<PhoneUser> createUsers(@RequestBody PhoneUser user) {
-        return service.save(user);
+        return service.save(user, null);
     }
 
     @PostMapping("/login")
