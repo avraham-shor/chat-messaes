@@ -21,3 +21,21 @@ function createDiv(id, className) {
     div.id = id;
     return div;
 }
+
+function insertMenuInOuterDivAndGetIcon(outerDiv) { 
+    let icon = createDiv('icon', 'icon-menu');
+                let div1 = createDiv();
+                let div2 = createDiv();
+                let div3 = createDiv();
+                icon.appendChild(div1);
+                icon.appendChild(div2);
+                icon.appendChild(div3);
+                outerDiv.appendChild(icon);//mouseover
+                outerDiv.addEventListener('mouseover', function() {
+                    icon.className = 'icon-menu show';
+                });
+                outerDiv.addEventListener('mouseleave', function() {
+                    icon.className = 'icon-menu hide';
+                });
+            return icon;
+}

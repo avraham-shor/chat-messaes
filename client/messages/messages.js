@@ -1,8 +1,46 @@
+
+
+// this.server = sio.listen(port);
+
+
+// const connection = (server) => {
+//     // Adding socket connection to the server
+//     const io = socketIO.listen(server);
+   
+//     // Handle events
+//     io.on("connection", (newSocket) => {
+//      socket = newSocket;
+//      console.log(newSocket.id);
+//     });
+//    }
+
+//    const socket = io("http://localhost:8080");
+//    socket.headers.add("Access-Control-Allow-Origin", "application/json");
+//    socket.on("connection", (newSocket) => {
+//     console.log('dcsdcsdbc');
+//    })
+
+// const io = socket.io;
+
+// io.on('connection', client => {
+//     client.on('event', data => { /* … */ });
+//     client.on('disconnect', () => { /* … */ });
+//   });
+//   server.listen(3000);
+
+
+// const plant = new Plant();
+
+// createServer(plant)
+//     .listen(8080)
+
 getMessages();
+
 
 setInterval(function () {
     checkIfNewMessage();
 }, 3000);
+
 
 function getMessages() {
     this.myHttp = new MyHttp();
@@ -35,9 +73,9 @@ function getMessages() {
                     msg.className = 'msg msg-sent';
                     time.className = 'time time-sent';
                 }
-                
                 msg.appendChild(text);
-                msg.addEventListener('dblclick', function () {
+                const icon = insertMenuInOuterDivAndGetIcon(msg);
+                icon.addEventListener('click', function () {
                     const m = message.text;
                     const dropdown = createDiv('dropdown', 'dropdown-menu');
                     const deleteMsg = createDiv('deleteMsg', 'dropdown');
