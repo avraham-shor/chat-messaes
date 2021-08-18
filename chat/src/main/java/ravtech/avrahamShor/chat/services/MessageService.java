@@ -39,5 +39,13 @@ public class MessageService extends BaseService<Message, MessageRepository>{
         msg.setDateTime(getFormatDate());
         return super.save(msg);
     }
+    @Override
+    public ResponseEntity<Message> update(Message msg, String id) {
+        if (id == null) return new ResponseEntity<>(null, HttpStatus.UNPROCESSABLE_ENTITY);
+        if (repo.findById(id).isEmpty()) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        return super.save(msg);
+    }
+
+
 
 }

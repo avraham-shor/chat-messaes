@@ -30,12 +30,38 @@ function getUsers() {
                 member.appendChild(img);
                 member.appendChild(listName);
                 phone_screen.appendChild(member);
-
-                member.addEventListener('click', function () {
+                const icon = insertMenuInOuterDivAndGetIcon(member);
+                const name = user.username;
+                listName.addEventListener('click', function () {
                     setStorItems('message_user_id', user.id);
                     setStorItems('message_user_name', user.username);
                     location.href = "messages/messages.html";
-                })
+                });
+                icon.addEventListener('click', function () {
+                    const dropdown = createDiv('dropdown', 'dropdown-menu');
+                    const deleteUser = createDiv('deleteUser', 'dropdown');
+                    const editUser = createDiv('editUser', 'dropdown');
+                    dropdown.appendChild(editUser);
+                    dropdown.appendChild(deleteUser);
+                    deleteUser.innerText = 'Delete user';
+                    editUser.innerText = 'Edit user';
+                        member.appendChild(dropdown);
+                        deleteUser.addEventListener('click', function () {
+                            if (confirm('Are you sure that you want delete user ' + name + ' ?')) {
+                                myHttp.sendHttp('users/' + user.id, 'DELETE');
+                                window.location.reload();
+                            }
+                        });
+
+                        editUser.addEventListener('click', function () {
+                            setStorItems('edit-user-id', user.id);
+                            setStorItems('edit-user-username', user.username);
+                            setStorItems('edit-user-email', user.email);
+                            setStorItems('edit-user-password', user.password);
+                            setStorItems('edit-user-phone', user.phone);
+                            location.href = "add-user/add-user.html";
+                        });
+                });
             });
         }
     }
@@ -43,7 +69,7 @@ function getUsers() {
 }
 
 
-window.addEventListener("click", () => {
+window.addEventListener("dblclick", () => {
     const $phone = document.querySelector(".phone")
     $phone.classList.toggle('-loooooong')
 })

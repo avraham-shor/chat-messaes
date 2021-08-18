@@ -127,18 +127,19 @@
     border-radius: 20px;
     padding: 1rem;
     cursor: pointer;
+    position: relative;
 }
 
 .dropdown-menu {
     position: absolute;
     margin: 2%;
-    width: 37%;
-    height: 6vh;
+    width: 65%;
     background-color: white;
     color: green;
     font-size: 1.5rem;
     cursor: grab;
     box-shadow: 2.5px -2.5px grey;
+    z-index: 20;
 }
 
 .dropdown {
@@ -186,6 +187,29 @@
 .writer {
     margin: 4%;
     border: solid 2px rgb(7, 169, 245);
+}
+
+.icon-menu {
+    position: absolute;
+    right: 15px;
+    top: 6px;
+    visibility: hidden;
+}
+
+.hide {
+    visibility: hidden;
+
+}
+
+.show {
+    visibility: visible;
+}
+
+.icon-menu > div {
+    width: 3vw;
+    height: 0.5vh;
+    background-color: black;
+    margin: 6px 0;
 }
 
 .icon-box {

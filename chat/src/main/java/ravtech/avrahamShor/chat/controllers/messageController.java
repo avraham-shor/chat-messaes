@@ -1,21 +1,18 @@
 package ravtech.avrahamShor.chat.controllers;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ravtech.avrahamShor.chat.models.Message;
 import ravtech.avrahamShor.chat.services.MessageService;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import static ravtech.avrahamShor.chat.Configuration.*;
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/messages")
-@CrossOrigin(origins = "*")
-public class messageController {
 
-    @Autowired
-    MessageService service;
+
+
+@RestController
+@RequestMapping(API_MESSAGES)
+@CrossOrigin(origins = "*")
+public class messageController extends BaseController<Message, MessageService>{
 
     @GetMapping("/{senderId}/{receiverId}")
     public ResponseEntity<List<Message>> getMessagesByIds(@PathVariable("senderId") String senderId,@PathVariable("receiverId") String receiverId) {
@@ -27,13 +24,4 @@ public class messageController {
         return service.getCountMessages(anotherId, userId);
     }
 
-    @PostMapping("")
-    public ResponseEntity<Message> createMessage(@RequestBody  Message msg) {
-        return service.save(msg);
-    }
-
-    @DeleteMapping("/{messageId}")
-    public ResponseEntity<String> delete(@PathVariable("messageId") String messageId) {
-        return service.delete(messageId);
-    }
 }
