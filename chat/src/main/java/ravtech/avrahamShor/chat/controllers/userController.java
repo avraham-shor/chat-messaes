@@ -1,30 +1,15 @@
 package ravtech.avrahamShor.chat.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ravtech.avrahamShor.chat.models.PhoneUser;
 import ravtech.avrahamShor.chat.services.UserService;
-
-import java.util.List;
+import static ravtech.avrahamShor.chat.Configuration.*;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/users")
-public class userController {
-
-    @Autowired
-    UserService service;
-
-    @GetMapping("")
-    public ResponseEntity<List<PhoneUser>> getAllUsers() {
-        return service.getAll();
-    }
-
-    @PostMapping("")
-    public ResponseEntity<PhoneUser> createUsers(@RequestBody PhoneUser user) {
-        return service.save(user, null);
-    }
+@RequestMapping(API_USER)
+public class userController extends BaseController<PhoneUser, UserService> {
 
     @PostMapping("/login")
     public ResponseEntity<PhoneUser> login(@RequestBody PhoneUser user) {

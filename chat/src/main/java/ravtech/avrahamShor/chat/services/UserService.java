@@ -24,11 +24,17 @@ public class UserService extends BaseService<PhoneUser, UserRepository> {
     }
 
     @Override
-    public ResponseEntity<PhoneUser> save(PhoneUser user, String id) {
+    public ResponseEntity<PhoneUser> save(PhoneUser user) {
         if (isEmailExist(user.getEmail())) {
             return new ResponseEntity<>(null, HttpStatus.CONFLICT);
         }
-        return super.save(user, null);
+        return super.save(user);
+    }
+
+    public ResponseEntity<PhoneUser> update(PhoneUser user, String id) {
+        if (id == null) return new ResponseEntity<>(null, HttpStatus.UNPROCESSABLE_ENTITY);
+        if (repo.findById(id).isEmpty()) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        return super.save(user);
     }
 
     private boolean isEmailExist(String email) {
