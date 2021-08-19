@@ -6,8 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.*;
 
-import static java.util.Collections.*;
-
 @SpringBootApplication
 public class ChatApplication {
 

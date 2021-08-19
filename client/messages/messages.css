@@ -63,7 +63,7 @@
     flex: 1 0 auto;
     flex-direction: column-reverse;
     background-color: var(--black4);
-    max-height: 65vh !important;
+    max-height: 37.1rem !important;
     overflow: scroll;
 }
 
@@ -128,6 +128,7 @@
     padding: 1rem;
     cursor: pointer;
     position: relative;
+    /* text-align: center; */
 }
 
 .dropdown-menu {
@@ -155,9 +156,17 @@
     margin-left: 40%;
 }
 
+.msg-sent > .icon-menu {
+    background-color: rgb(7, 169, 245);
+}
+
 .msg-received {
     background-color: yellow;
     margin-right: 40%;
+}
+
+.msg-received > .icon-menu {
+    background-color: yellow;
 }
 
 .time {
@@ -176,10 +185,10 @@
 
 .writer-box {
     position: inherit;
-    bottom: -0.2vh;
+    bottom: -0.3rem;
     width: 26rem;
     background-color: gray;
-    height: 14vh;
+    height: 8rem;
     line-height: 13;
     display: flex;
 }
@@ -192,7 +201,7 @@
 .icon-menu {
     position: absolute;
     right: 15px;
-    top: 6px;
+    top: 11px;
     visibility: hidden;
 }
 
@@ -207,7 +216,7 @@
 
 .icon-menu > div {
     width: 3vw;
-    height: 0.5vh;
+    height: 0.3vh;
     background-color: black;
     margin: 6px 0;
 }
@@ -216,12 +225,12 @@
     margin: 4%;
     margin-left: 0%;
     width: 5rem;
-    height: 10.3vh;
+    height: 5.9rem;
     background-color: white;
 }
 
 .icon-send {
-    height: 4vh;
+    height: 2rem;
     margin: 10%;
     background-size: cover;
     background-clip: unset;
@@ -235,8 +244,9 @@
 }
 
 .back {
-    margin-left: 11rem;
-    width: 2rem;
+    position: absolute;
+    right: 0;
+    width: 2.5rem;
     background: rgba(230, 225, 225, 0.3);
     font-size: 2rem;
     color: blueviolet;

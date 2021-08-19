@@ -5,15 +5,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ravtech.avrahamShor.chat.models.ObjectId;
 import ravtech.avrahamShor.chat.services.BaseService;
-import java.io.*;
-import java.net.*;
-
 
 import java.util.List;
 
 public abstract class BaseController< T extends ObjectId ,U extends BaseService>  {
     @Autowired
-    U service;
+    protected U service;
+
 
     @GetMapping("")
     public ResponseEntity<List<T>> getAllUsers() {
@@ -22,7 +20,6 @@ public abstract class BaseController< T extends ObjectId ,U extends BaseService>
 
     @PostMapping("")
     public ResponseEntity<T> createUsers(@RequestBody T obj) {
-//        this.pingToClient();
         return service.save(obj);
     }
 
@@ -36,15 +33,4 @@ public abstract class BaseController< T extends ObjectId ,U extends BaseService>
         return service.delete(messageId);
     }
 
-    private void pingToClient() {
-        try{
-            Socket s=new Socket("localhost",90);
-            DataOutputStream dout=new DataOutputStream(s.getOutputStream());
-            dout.writeUTF("Hello Server");
-            System.out.println("pingToClient");
-            dout.flush();
-            dout.close();
-            s.close();
-        }catch(Exception e){e.printStackTrace();}
-    }
 }

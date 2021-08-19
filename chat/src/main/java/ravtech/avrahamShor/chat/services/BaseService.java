@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Repository;
 import ravtech.avrahamShor.chat.models.ObjectId;
 
@@ -21,6 +22,9 @@ public abstract class BaseService<T extends ObjectId, U extends MongoRepository<
     @Autowired
     protected U repo;
 
+    @Autowired
+    protected SimpMessagingTemplate template;
+
     public static String getFormatDate() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(PATTERN);
         return simpleDateFormat.format(new Date());
@@ -31,7 +35,6 @@ public abstract class BaseService<T extends ObjectId, U extends MongoRepository<
             List<T> objects = new ArrayList<>(repo.findAll());
 
             if (objects.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
             return new ResponseEntity<>(objects, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -43,6 +46,7 @@ public abstract class BaseService<T extends ObjectId, U extends MongoRepository<
         System.out.println(obj);
         try {
             T _obj = repo.save(obj);
+            callSocket();
             return new ResponseEntity<>(_obj, HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
@@ -51,7 +55,7 @@ public abstract class BaseService<T extends ObjectId, U extends MongoRepository<
     }
 
     public ResponseEntity<String> delete(String id) {
-
+        callSocket();
         if (id == null) return new ResponseEntity<>(id, HttpStatus.UNPROCESSABLE_ENTITY);
         if (!repo.existsById(id)) return new ResponseEntity<>(id, HttpStatus.NOT_FOUND);
         repo.deleteById(id);
@@ -63,6 +67,10 @@ public abstract class BaseService<T extends ObjectId, U extends MongoRepository<
         if (id == null) return new ResponseEntity<>(null, HttpStatus.UNPROCESSABLE_ENTITY);
         if (repo.findById(id).isEmpty()) return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         return save(obj);
+    }
+
+    protected void callSocket(){
+        this.template.convertAndSend("/topic/greetings", "new message!");
     }
 
 }
