@@ -1,45 +1,13 @@
 
 
-// this.server = sio.listen(port);
 
 
-// const connection = (server) => {
-//     // Adding socket connection to the server
-//     const io = socketIO.listen(server);
-   
-//     // Handle events
-//     io.on("connection", (newSocket) => {
-//      socket = newSocket;
-//      console.log(newSocket.id);
-//     });
-//    }
 
-//    const socket = io("http://localhost:8080");
-//    socket.headers.add("Access-Control-Allow-Origin", "application/json");
-//    socket.on("connection", (newSocket) => {
-//     console.log('dcsdcsdbc');
-//    })
-
-// const io = socket.io;
-
-// io.on('connection', client => {
-//     client.on('event', data => { /* … */ });
-//     client.on('disconnect', () => { /* … */ });
-//   });
-//   server.listen(3000);
-
-
-// const plant = new Plant();
-
-// createServer(plant)
-//     .listen(8080)
-
+// setInterval(function () {
+//     checkIfNewMessage();
+// }, 3000);
 getMessages();
-
-
-setInterval(function () {
-    checkIfNewMessage();
-}, 3000);
+connect();
 
 
 function getMessages() {
@@ -52,6 +20,7 @@ function getMessages() {
     const phone = byId('phone_screen_msg');
     const send = byId('send');
     const writerText = byId('writer');
+    writerText.value = '';
     phone.innerText = '';
     let editMessage;
     myHttp.Http.onreadystatechange = function () {
@@ -64,6 +33,7 @@ function getMessages() {
                 const time = createDiv('time', 'time');
                 time.innerHTML = message.dateTime;
                 let msg = createDiv('msg', 'msg');
+                msg.dir = 'auto';
 
                 if (message.senderId == receiverId) {
                     msg.className = 'msg msg-received';
@@ -103,7 +73,8 @@ function getMessages() {
                 phone.appendChild(msg);
                 phone.appendChild(time);
             });
-
+            console.log("phone.scrollTop", phone.scrollTop);
+            phone.scrollTop = 0;
         }
         else {
             let text = document.createTextNode('');
@@ -112,12 +83,14 @@ function getMessages() {
             phone.appendChild(msg);
         }
     }
-
-
-    send.addEventListener('click', function () {
+    send.onclick = function () {
         console.log('editMessage', editMessage);
         sendMessage(writerText.value, USER_ID, receiverId, editMessage);
-    })
+    }
+    // send.addEventListener('click', function () {
+    //     console.log('editMessage', editMessage);
+    //     sendMessage(writerText.value, USER_ID, receiverId, editMessage);
+    // })
 };
 
 function sendMessage(text, senderId, receiverId, editMessage) {
@@ -129,7 +102,8 @@ function sendMessage(text, senderId, receiverId, editMessage) {
     myHttp.sendHttp("messages/" + msgId, method, jsonMsg);
     myHttp.Http.onreadystatechange = function () {
         console.log(myHttp.Http.responseText);
-        window.location.reload();
+        console.log("status", myHttp.Http.status);
+        getMessages();
     }
 
 }
@@ -146,7 +120,7 @@ function checkIfNewMessage() {
             if (oldCount && count > oldCount) {
                 // let audio = byId('audio');
                 // audio.play();
-                window.location.reload();
+                getMessages();
             }
             window.localStorage.setItem(`messages_user_${anotherId}_count`, count);
 
@@ -154,4 +128,25 @@ function checkIfNewMessage() {
 
     }
 }
+
+
+
+
+function connect() {
+    var socket = new SockJS('http://localhost:8080/gs-guide-websocket');
+    let stompClient = Stomp.over(socket);
+    stompClient.connect({}, function (frame) {
+        console.log('Connected: ' + frame);
+        stompClient.send("/app/hello", {}, JSON.stringify({'name': "Avraham"}));
+        stompClient.subscribe('/topic/greetings', function (greeting) {
+            console.log(greeting);
+            checkIfNewMessage();
+            // window.location.reload();
+        });
+    });
+}
+
+
+
+
 
