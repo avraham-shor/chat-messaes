@@ -23,3 +23,11 @@ class Register {
         this.phone = phone;
     }
 }
+
+function SocketResponse(id, text, method, username, email, password, phone) {
+    this.id = id;
+    this.text = text;
+    this.user = new Register(username, email, password, phone);
+    this.method = method;
+    
+}

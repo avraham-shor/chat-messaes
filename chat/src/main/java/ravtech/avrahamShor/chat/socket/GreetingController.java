@@ -13,8 +13,7 @@ public class GreetingController {
     @MessageMapping("/hello")
     @SendTo("/topic/greetings")
     public String greeting(Message message) {
-//        Thread.sleep(1000); // simulated delay
-        return "Connect to AvraTech";
+        return null;
     }
 
 }

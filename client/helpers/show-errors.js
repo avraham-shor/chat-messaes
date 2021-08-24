@@ -39,3 +39,22 @@ function insertMenuInOuterDivAndGetIcon(outerDiv) {
                 });
             return icon;
 }
+
+function explanations() {
+    for (const id of arguments) {
+        const htmlElement = byId(id);
+        if (!htmlElement) return;
+        const description = createDiv(id + '-description', 'description');
+        htmlElement.addEventListener('mouseover', function (){
+        description.className = 'description show';
+        htmlElement.appendChild(description);
+        setLanguage();
+    });
+
+    htmlElement.addEventListener('mouseleave', function (){
+        description.className = 'description hide';
+    });
+    };
+    
+    
+}

@@ -14,7 +14,7 @@ public abstract class BaseController< T extends ObjectId ,U extends BaseService>
 
 
     @GetMapping("")
-    public ResponseEntity<List<T>> getAllUsers() {
+    public ResponseEntity<List<T>> getAllObjects() {
         return service.getAll();
     }
 

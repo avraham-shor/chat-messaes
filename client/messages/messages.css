@@ -205,6 +205,21 @@
     visibility: hidden;
 }
 
+
+.description {
+    position: absolute;
+    right: 3rem;
+    top: 2rem;
+    background-color: rgb(238, 238, 55);
+    color: green;
+    font-size: 1.5rem;
+    cursor: grab;
+    box-shadow: 2.5px -2.5px grey;
+    z-index: 20;
+    line-height: 1.5;
+    visibility: hidden;
+}
+
 .hide {
     visibility: hidden;
 
@@ -241,6 +256,13 @@
 
 .icon-send:hover {
     border: solid 1px rgb(7, 169, 245);
+}
+
+.log-out {
+    position: absolute;
+    top: 46.7rem;
+    right: 19rem;
+    width: 2rem;
 }
 
 .back {

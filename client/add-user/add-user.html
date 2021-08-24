@@ -15,13 +15,13 @@
             <div class="phone_mic"></div>
             <div class="phone_screen" id="phone_screen">
                 <div class="selector">
-                    <div class="select non-active" onclick="location.href = '../login/login.html' ">Login</div>
-                    <div class="select active">Register</div>
+                    <div class="select non-active" id="login" onclick="location.href = '../login/login.html' ">Login</div>
+                    <div class="select active" id="register">Register</div>
                 </div>
-                <form method="post" id="register">
+                <form method="post" id="register-form">
                     <div class="row">
                         <div>
-                            <label for="username">Type your User Name</label>
+                            <label id="r_name_label" for="username"></label>
                         </div>
                         <div>
                             <input type="text" name="username" id="username" dir="auto">
@@ -30,7 +30,7 @@
 
                     <div class="row">
                         <div>
-                            <label for="email">Type your Email</label>
+                            <label id="email_label" for="email"></label>
                         </div>
                         <div id="email-box">
                             <input type="text" name="email" id="email" dir="auto">
@@ -38,7 +38,7 @@
                     </div>
                     <div class="row">
                         <div>
-                            <label for="password">Type your Password</label>
+                            <label id="password_label" for="password"></label>
                         </div>
                         <div>
                             <input type="password" name="password" id="password" dir="auto">
@@ -46,13 +46,13 @@
                     </div>
                     <div class="row">
                         <div>
-                            <label for="phone">Type your Phone Number</label>
+                            <label id="r_phone_label" for="phone"></label>
                         </div>
                         <div>
                             <input type="text" name="phone" id="phone" dir="auto">
                         </div>
                     </div>
-                    <button type="button" onclick="onSubmit()">Submit</button>
+                    <button type="button" id="submit" onclick="onSubmit()">Submit</button>
                 </form>
             </div>
             <div class="phone_button"></div>

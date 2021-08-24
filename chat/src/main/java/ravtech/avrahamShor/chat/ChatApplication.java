@@ -5,13 +5,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @SpringBootApplication
 public class ChatApplication {
 
     public static void main(String[] args) {
 		SpringApplication.run(ChatApplication.class, args);
-
+//        runCodWarsFunctions();
     }
 
 
@@ -118,21 +119,13 @@ public class ChatApplication {
     }
 
     public static int findIt(int[] a) {
-
-        Map<Integer, Integer> mn = new HashMap<>();
-        long timeMilli2 = Calendar.getInstance().getTimeInMillis();
-        for (int j : a) {
-            if (!mn.containsKey(j)) mn.put(j, 1);
-            else mn.put(j, mn.get(j) + 1);
+        Arrays.sort(a);
+        int odd = 0;
+        int mul = -1;
+        for (int n: a) {
+            odd += n * (mul *= -1);
         }
-        System.out.println(mn);
-        for (var i : mn.entrySet())
-            if (i.getValue() % 2 != 0) {
-                System.out.println(Calendar.getInstance().getTimeInMillis() - timeMilli2);
-                return i.getKey();
-            }
-        return 0;
-
+        return odd;
     }
 
     public static int duplicateCount(String text) {
@@ -168,15 +161,15 @@ public class ChatApplication {
 
 	private static void runCodWarsFunctions() {
 		System.out.println(findIt(new int[]{20,1,-1,2,-2,3,3,5,5,1,2,4,20,4,-1,-2,5}));
-//		System.out.println(findIt(new int[]{1,1,2,-2,5,2,4,4,-1,-2,5}));
-//		System.out.println(findIt(new int[]{20,1,1,2,2,3,3,5,5,4,20,4,5}));
-//		System.out.println(findIt(new int[]{10}));
+		System.out.println(findIt(new int[]{1,1,2,-2,5,2,4,4,-1,-2,5}));
+		System.out.println(findIt(new int[]{20,1,1,2,2,3,3,5,5,4,20,4,5}));
+		System.out.println(findIt(new int[]{10}));
 //		System.out.println(duplicateCount("indivisibility"));
 //		findIt(new int[]{1,3,1,3,7,4,4,5,6,5,6,7,7});
 //		System.out.println(solution(10));
-		Mixing.mix("Are they here", "yes, they are here");
-		Mixing.mix("looping is fun but dangerous", "less dangerous than coding");
-		Mixing.mix("codewars", "codewars");
+//		Mixing.mix("Are they here", "yes, they are here");
+//		Mixing.mix("looping is fun but dangerous", "less dangerous than coding");
+//		Mixing.mix("codewars", "codewars");
 	}
 }
 
@@ -197,12 +190,9 @@ class Mixing {
 			if (str1.length() == str2.length()) sums.add("=" + str1);
 		}
 		ArrayList<String> sum = new ArrayList<>(sums);
-		sum.sort(new Comparator<>() {
-            @Override
-            public int compare(String o1, String o2) {
-                if (o1.length() == o2.length()) return o1.compareTo(o2);
-                return o2.length() - o1.length();
-            }
+		sum.sort((o1, o2) -> {
+            if (o1.length() == o2.length()) return o1.compareTo(o2);
+            return o2.length() - o1.length();
         });
 		StringBuilder sb = new StringBuilder();
         sum.stream().map(i -> i.substring(0, 1) + ':' + i.substring(1) + '/').forEach(sb::append);

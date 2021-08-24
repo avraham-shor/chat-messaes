@@ -41,4 +41,9 @@ public class UserService extends BaseService<PhoneUser, UserRepository> {
         int contain = repo.findByEmail(email).size();
         return contain != 0;
     }
+
+    public PhoneUser getUser(String id) {
+        if (repo.findById(id).isPresent()) return repo.findById(id).get();
+        return null;
+    }
 }
