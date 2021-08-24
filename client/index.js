@@ -37,34 +37,36 @@ function getUsers() {
                     setStorItems('message_user_name', user.username);
                     location.href = "messages/messages.html";
                 });
+                explanations('icon');
                 icon.addEventListener('click', function () {
                     const dropdown = createDiv('dropdown', 'dropdown-menu');
-                    const deleteUser = createDiv('deleteUser', 'dropdown');
-                    const editUser = createDiv('editUser', 'dropdown');
+                    const deleteUser = createDiv('delete_user', 'dropdown');
+                    const editUser = createDiv('edit_user', 'dropdown');
                     dropdown.appendChild(editUser);
                     dropdown.appendChild(deleteUser);
-                    deleteUser.innerText = 'Delete user';
-                    editUser.innerText = 'Edit user';
-                        member.appendChild(dropdown);
-                        deleteUser.addEventListener('click', function () {
-                            if (confirm('Are you sure that you want delete user ' + name + ' ?')) {
-                                myHttp.sendHttp('users/' + user.id, 'DELETE');
-                                window.location.reload();
-                            }
-                        });
-
-                        editUser.addEventListener('click', function () {
-                            setStorItems('edit-user-id', user.id);
-                            setStorItems('edit-user-username', user.username);
-                            setStorItems('edit-user-email', user.email);
-                            setStorItems('edit-user-password', user.password);
-                            setStorItems('edit-user-phone', user.phone);
-                            location.href = "add-user/add-user.html";
-                        });
+                    member.appendChild(dropdown);
+                    setLanguage();
+                    deleteUser.addEventListener('click', function () {
+                        if (confirm('Are you sure that you want delete user ' + name + ' ?')) {
+                            myHttp.sendHttp('users/' + user.id, 'DELETE');
+                            window.location.reload();
+                        }
+                    });
+                    
+                    editUser.addEventListener('click', function () {
+                        setStorItems('edit-user-id', user.id);
+                        setStorItems('edit-user-username', user.username);
+                        setStorItems('edit-user-email', user.email);
+                        setStorItems('edit-user-password', user.password);
+                        setStorItems('edit-user-phone', user.phone);
+                        location.href = "add-user/add-user.html";
+                    });
                 });
             });
         }
     }
+    
+
 
 }
 

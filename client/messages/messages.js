@@ -1,11 +1,7 @@
-
-
-
-
-
 // setInterval(function () {
 //     checkIfNewMessage();
 // }, 3000);
+
 getMessages();
 connect();
 
@@ -14,7 +10,7 @@ function getMessages() {
     this.myHttp = new MyHttp();
     const receiverId = getStorItems('message_user_id');
     const name = getStorItems('message_user_name');
-    myHttp.sendHttp('messages/' + USER_ID + '/' + receiverId, "GET");
+    myHttp.sendHttp('messages/ids?senderId=' + USER_ID + '&receiverId=' + receiverId, "GET");
     const username = byId('user_name');
     username.innerText = name;
     const phone = byId('phone_screen_msg');
@@ -45,35 +41,40 @@ function getMessages() {
                 }
                 msg.appendChild(text);
                 const icon = insertMenuInOuterDivAndGetIcon(msg);
-                icon.addEventListener('click', function () {
-                    const m = message.text;
-                    const dropdown = createDiv('dropdown', 'dropdown-menu');
-                    const deleteMsg = createDiv('deleteMsg', 'dropdown');
-                    const editMsg = createDiv('editMsg', 'dropdown');
-                    dropdown.appendChild(deleteMsg);
-                    if (message.senderId == USER_ID) {
-                        dropdown.appendChild(editMsg);
-                    }
-                    
-                    deleteMsg.innerText = 'Delete message';
-                    editMsg.innerText = 'Edit message';
+                let dropdown;
+                icon.onclick = function () {
+                    if (dropdown) {
+                        dropdown.innerHTML = '';
+                    } else {
+                        const m = message.text;
+                        dropdown = createDiv('dropdown', 'dropdown-menu');
+                        const deleteMsg = createDiv('delete_msg', 'dropdown');
+                        const editMsg = createDiv('edit_msg', 'dropdown');
+                        
+                        dropdown.appendChild(deleteMsg);
+                        explanations('icon');
+                        if (message.senderId == USER_ID) {
+                            dropdown.appendChild(editMsg);
+                        }
                         msg.appendChild(dropdown);
-                        deleteMsg.addEventListener('click', function () {
+                        
+                        deleteMsg.onclick = function () {
                             if (confirm('Are you sure that you want delete msg ' + m + ' ?')) {
                                 myHttp.sendHttp('messages/' + message.id, 'DELETE');
-                                window.location.reload();
+                                getMessages();
                             }
-                        });
-
-                        editMsg.addEventListener('click', function () {
+                        };
+                        
+                        editMsg.onclick = function () {
                             writerText.value = m;
                             editMessage = message;
-                        });
-                });
+                        };
+                        setLanguage();  
+                    }
+                };
                 phone.appendChild(msg);
                 phone.appendChild(time);
             });
-            console.log("phone.scrollTop", phone.scrollTop);
             phone.scrollTop = 0;
         }
         else {
@@ -84,13 +85,13 @@ function getMessages() {
         }
     }
     send.onclick = function () {
-        console.log('editMessage', editMessage);
         sendMessage(writerText.value, USER_ID, receiverId, editMessage);
     }
-    // send.addEventListener('click', function () {
-    //     console.log('editMessage', editMessage);
-    //     sendMessage(writerText.value, USER_ID, receiverId, editMessage);
-    // })
+
+    send.enter = function () {
+        sendMessage(writerText.value, USER_ID, receiverId, editMessage);
+    }
+    explanations('send', 'log-out', 'back');
 };
 
 function sendMessage(text, senderId, receiverId, editMessage) {
@@ -101,52 +102,72 @@ function sendMessage(text, senderId, receiverId, editMessage) {
     jsonMsg = JSON.stringify(message);
     myHttp.sendHttp("messages/" + msgId, method, jsonMsg);
     myHttp.Http.onreadystatechange = function () {
-        console.log(myHttp.Http.responseText);
-        console.log("status", myHttp.Http.status);
         getMessages();
     }
-
-}
-
-function checkIfNewMessage() {
-    this.myHttp = new MyHttp();
-    const anotherId = getStorItems('message_user_id');
-    myHttp.sendHttp(`messages/count/${anotherId}/${USER_ID}`, "GET");
-    myHttp.Http.onreadystatechange = function () {
-        if (myHttp.Http.readyState == 4 && myHttp.Http.status == 200) {
-            const count = JSON.parse(myHttp.Http.responseText);
-            oldCount = getStorItems(`messages_user_${anotherId}_count`);
-            console.log('count', count, 'oldCount', oldCount);
-            if (oldCount && count > oldCount) {
-                // let audio = byId('audio');
-                // audio.play();
-                getMessages();
-            }
-            window.localStorage.setItem(`messages_user_${anotherId}_count`, count);
-
-        }
-
-    }
-}
-
-
+};
 
 
 function connect() {
-    var socket = new SockJS('http://localhost:8080/gs-guide-websocket');
+    var socket = new SockJS(HOST + '8080/gs-guide-websocket');
     let stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
-        console.log('Connected: ' + frame);
+        console.log('Connected');
         stompClient.send("/app/hello", {}, JSON.stringify({'name': "Avraham"}));
         stompClient.subscribe('/topic/greetings', function (greeting) {
-            console.log(greeting);
-            checkIfNewMessage();
-            // window.location.reload();
+            const body = greeting.body;
+            response = JSON.parse(body);
+            if (response && response.id == getStorItems('userId')){
+                notificationMessage(response);
+                getMessages();
+            }
         });
     });
+};
+
+
+function notificationMessage(response) {
+    if (!response.id) return;
+    let audio = new Audio('../images/ping_ping.mp3');
+        audio.play();
+    if (!window.Notification) {
+        console.log('Browser does not support notifications.');
+    } else {
+        let action;
+        switch (response.method) {
+            case 'POST':
+                action = SENT
+                break;
+            case 'DELETE':
+                action = DELETED
+                break;
+            case 'PUT':
+                action = EDIT
+                break;
+            default:
+                break;
+        }
+        // check if permission is already granted
+        if (Notification.permission === 'granted') {
+            // show notification here
+            var notify = new Notification(response.user.username , {
+                body: '\n' + action + '\n' + response.text,
+                icon: '../images/avraham_shor_profile.jpg',
+            });
+        } else {
+            // request permission from user
+            Notification.requestPermission().then(function (p) {
+                if (p === 'granted') {
+                    // show notification here
+                    var notify = new Notification(response.user.username , {
+                        body: '\n' + action + '\n' + response.text,
+                        icon: 'https://bit.ly/2DYqRrh',
+                    });
+                } else {
+                    console.log('User blocked notifications.');
+                }
+            }).catch(function (err) {
+                console.error(err);
+            });
+        }
+    }
 }
-
-
-
-
-

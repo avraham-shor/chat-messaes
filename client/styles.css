@@ -168,6 +168,20 @@
     cursor:grabbing;
 }
 
+.description {
+    position: absolute;
+    right: 3rem;
+    top: 2rem;
+    background-color: rgb(238, 238, 55);
+    color: green;
+    font-size: 1.5rem;
+    cursor: grab;
+    box-shadow: 2.5px -2.5px grey;
+    z-index: 20;
+    line-height: 1.5;
+    visibility: hidden;
+}
+
 .hide {
     visibility: hidden;
 
@@ -182,6 +196,27 @@
     height: 0.5vh;
     background-color: black;
     margin: 6px 0;
+}
+
+.icon-send {
+    height: 2rem;
+    margin: 10%;
+    background-size: cover;
+    background-clip: unset;
+    background-repeat: round;
+    width: 3.6rem;
+    color: black;
+}
+
+.icon-send:hover {
+    border: solid 1px rgb(7, 169, 245);
+}
+
+.log-out {
+    position: fixed;
+    top: 46.7rem;
+    right: 19rem;
+    width: 2rem;
 }
 
 
