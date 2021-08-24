@@ -14,14 +14,10 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class messageController extends BaseController<Message, MessageService>{
 
-    @GetMapping("/{senderId}/{receiverId}")
-    public ResponseEntity<List<Message>> getMessagesByIds(@PathVariable("senderId") String senderId,@PathVariable("receiverId") String receiverId) {
+    @GetMapping("/ids")
+    @ResponseBody
+    public ResponseEntity<List<Message>> getMessagesByIds(@RequestParam(name = "senderId") String senderId,@RequestParam(name = "receiverId") String receiverId) {
         return service.getMessagesByIds(senderId, receiverId);
-    }
-
-    @GetMapping("/count/{anotherId}/{userId}")
-    public int getCountMessages(@PathVariable("anotherId") String anotherId,@PathVariable("userId") String userId) {
-        return service.getCountMessages(anotherId, userId);
     }
 
 }

@@ -7,11 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Repository;
 import ravtech.avrahamShor.chat.models.ObjectId;
-
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
 import static ravtech.avrahamShor.chat.Configuration.PATTERN;
 
 
@@ -46,7 +44,6 @@ public abstract class BaseService<T extends ObjectId, U extends MongoRepository<
         System.out.println(obj);
         try {
             T _obj = repo.save(obj);
-            callSocket();
             return new ResponseEntity<>(_obj, HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
@@ -55,7 +52,7 @@ public abstract class BaseService<T extends ObjectId, U extends MongoRepository<
     }
 
     public ResponseEntity<String> delete(String id) {
-        callSocket();
+
         if (id == null) return new ResponseEntity<>(id, HttpStatus.UNPROCESSABLE_ENTITY);
         if (!repo.existsById(id)) return new ResponseEntity<>(id, HttpStatus.NOT_FOUND);
         repo.deleteById(id);
@@ -69,9 +66,6 @@ public abstract class BaseService<T extends ObjectId, U extends MongoRepository<
         return save(obj);
     }
 
-    protected void callSocket(){
-        this.template.convertAndSend("/topic/greetings", "new message!");
-    }
 
 }
 
