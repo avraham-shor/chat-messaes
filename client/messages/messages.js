@@ -4,7 +4,7 @@
 
 getMessages();
 connect();
-
+setSendOnEnterEvens();
 
 function getMessages() {
     this.myHttp = new MyHttp();
@@ -108,7 +108,7 @@ function sendMessage(text, senderId, receiverId, editMessage) {
 
 
 function connect() {
-    var socket = new SockJS(HOST + '8080/gs-guide-websocket');
+    var socket = new SockJS(HOST + '8081/gs-guide-websocket');
     let stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         console.log('Connected');
@@ -170,4 +170,28 @@ function notificationMessage(response) {
             });
         }
     }
+}
+
+function setSendOnEnterEvens(){
+    var shiftDown = false;
+    var sendButton = document.getElementById("send");
+    var messageBox = document.getElementById("writer");
+    
+    document.onkeypress = function (e) {
+        
+        if(e.keyCode == 13) {
+            if(document.activeElement.id == "writer" && !shiftDown) {
+                e.preventDefault(); // prevent another \n from being entered
+                sendButton.click();
+            }
+        }
+    };
+    
+    document.onkeydown = function (e) {
+        if(e.keyCode == 16) shiftDown = true;
+    };
+    
+    document.onkeyup = function (e) {
+        if(e.keyCode == 16) shiftDown = false;
+    };
 }
