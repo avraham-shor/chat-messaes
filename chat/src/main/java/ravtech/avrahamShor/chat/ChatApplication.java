@@ -13,6 +13,10 @@ public class ChatApplication {
     public static void main(String[] args) {
 		SpringApplication.run(ChatApplication.class, args);
 //        runCodWarsFunctions();
+//        מענטש שמענטש = מענטש.גיב_די_אינסטאנס();
+//        שמענטש.בייט_די_נאמען("אברמי");
+//        שמענטש.דרוק();
+
     }
 
 

@@ -13,13 +13,16 @@ loginOrRegister = window.location.href.includes('login') || window.location.href
 if (!loginOrRegister && !getStorItems('userId')) {
     location.href = startTargetPath + 'login/login.html';
 }
-const isHebrew = true;
+let isHebrew = true;
 
 
 const SENT = !isHebrew ? 'send to you a message:' : 'שלך לך הודעה:';
 const DELETED = !isHebrew ? ' deleted the message:' : 'מחק את ההודעה:';
 const EDIT = !isHebrew ? ' edit the message:' : 'ערך את ההודעה:';
 
+function changeLanguage() {
+    isHebrew = !isHebrew;
+}
 
 setLanguage();
 function setLanguage() {
@@ -37,9 +40,9 @@ function setLanguage() {
         {id: 'edit_msg' , header: ['Edit message', 'ערוך הודעה']}, 
         {id: 'send-description' , header: ['Send', 'שליחה']},
         {id: 'log-out-description' , header: ['Log Out', 'התנתק']},
-        {id: 'back-description' , header: ['back', 'חזור']},
-        {id: 'icon-description' , header: ['menu', 'תפריט']},
-        // {id: '' , header: ['', '']},
+        {id: 'back-description' , header: ['Back', 'חזור']},
+        {id: 'icon-description' , header: ['Menu', 'תפריט']},
+        {id: 'language-description' , header: ['Change Language', 'החלף שפה']},
         // {id: '' , header: ['', '']},
         // {id: '' , header: ['', '']},
         
@@ -50,6 +53,9 @@ function setLanguage() {
         byId(element.id).innerText = isHebrew? element.header[1] : element.header[0];
     }
   }
+//   document.getElementsByClassName('dropdown').innerText = 'AAAAAAAAAAAAA'
+
+  
 
 
 }

@@ -97,14 +97,6 @@
     clip-path: polygon(70% 0, 100% 0%, 100% 100%, 30% 100%);
 }
 
-.phone_button {
-    width: 1.5rem;
-    height: 1.5rem;
-    border: 2px solid var(--black4);
-    border-radius: 50%;
-    margin: 1rem auto;
-}
-
 .member {
     position: relative;
     width: 98%;
@@ -170,15 +162,14 @@
 
 .description {
     position: absolute;
-    right: 3rem;
-    top: 2rem;
+    bottom: 1rem;
     background-color: rgb(238, 238, 55);
     color: green;
     font-size: 1.5rem;
-    cursor: grab;
     box-shadow: 2.5px -2.5px grey;
     z-index: 20;
     line-height: 1.5;
+    width: max-content;
     visibility: hidden;
 }
 
@@ -191,33 +182,36 @@
     visibility: visible;
 }
 
-.icon-menu > div {
-    width: 3vw;
-    height: 0.5vh;
-    background-color: black;
-    margin: 6px 0;
-}
-
-.icon-send {
-    height: 2rem;
-    margin: 10%;
-    background-size: cover;
-    background-clip: unset;
-    background-repeat: round;
-    width: 3.6rem;
-    color: black;
-}
-
-.icon-send:hover {
-    border: solid 1px rgb(7, 169, 245);
+.phone-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 0.5rem;
 }
 
 .log-out {
-    position: fixed;
-    top: 46.7rem;
-    right: 19rem;
-    width: 2rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    background-size: cover;
+    background-clip: unset;
+    background-repeat: round;
+    color: black;
 }
+
+.phone_button {
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 2px solid var(--black4);
+    border-radius: 50%;
+}
+
+.btn {
+    position: relative;
+}
+
+.btn:active {
+    border-style: inset;
+}
+
 
 
 form {
@@ -253,3 +247,4 @@ form {
     font-size: 25px;
     margin-left: .5em;
     }
+

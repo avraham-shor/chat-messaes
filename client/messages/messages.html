@@ -17,7 +17,7 @@
                 <div class="member">
                     <img src="../../images/pngwing.com (1).png">
                     <div class="name-in-list" id="user_name"></div>
-                    <button type="button" id="back" class="back" onclick="location.href = '../index.html'">></button>
+                    <!-- <button type="button" id="back" class="back" onclick="location.href = '../index.html'">></button> -->
                 </div>
                 <div class="phone_screen_msg" id="phone_screen_msg">
                 </div>
@@ -29,12 +29,15 @@
                     </div>
                 </div>
             </div>
-            <div class="icon-send log-out" id="log-out" style="background-image: url(../../images/log-out.png);"
+            <div class="phone-buttons" >
+                <div class="log-out btn" id="language" style="background-image: url(../../images/language.png);"
+                onclick="changeLanguage()"></div>
+                <div class="phone_button btn" id="back" onclick="location.href = '../index.html'"></div>
+                <div class="log-out btn" id="log-out" style="background-image: url(../../images/log-out.png);"
                 onclick="window.location.href = '../login/login.html' "></div>
-            <div class="phone_button"></div>
+            </div>
         </div>
     </div>
-
 
 
     <!-- <audio id="audio" controls autoplay>
