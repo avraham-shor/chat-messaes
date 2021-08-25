@@ -4,6 +4,7 @@ getUsers();
 
 
 function getUsers() {
+    explanations('log-out', 'back', 'language');
     const phone_screen = document.getElementById('phone_screen');
     console.log(USER_ID);
     myHttp.sendHttp('users', "GET");
@@ -65,9 +66,6 @@ function getUsers() {
             });
         }
     }
-    
-
-
 }
 
 

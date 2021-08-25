@@ -30,7 +30,7 @@ function insertMenuInOuterDivAndGetIcon(outerDiv) {
                 icon.appendChild(div1);
                 icon.appendChild(div2);
                 icon.appendChild(div3);
-                outerDiv.appendChild(icon);//mouseover
+                outerDiv.appendChild(icon);
                 outerDiv.addEventListener('mouseover', function() {
                     icon.className = 'icon-menu show';
                 });

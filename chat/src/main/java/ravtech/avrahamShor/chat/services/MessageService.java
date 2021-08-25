@@ -32,10 +32,6 @@ public class MessageService extends BaseService<Message, MessageRepository>{
         }
     }
 
-    public int getCountMessages(String anotherId,String userId) {
-        return repo.findBySenderIdAndReceiverId(anotherId, userId).size();
-    }
-
     @Override
     public ResponseEntity<Message> save(Message msg) {
         Date date = new Date();
@@ -63,6 +59,7 @@ public class MessageService extends BaseService<Message, MessageRepository>{
     }
 
     public void callSocket( Message msg, RequestMethod method){
+        System.out.println(msg);
 
         this.template.convertAndSend("/topic/greetings", new socketResponse(msg.getReceiverId() ,msg.getText(), userService.getUser(msg.getSenderId()), method));
     }

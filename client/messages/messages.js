@@ -41,6 +41,7 @@ function getMessages() {
                 }
                 msg.appendChild(text);
                 const icon = insertMenuInOuterDivAndGetIcon(msg);
+                explanations('icon');
                 let dropdown;
                 icon.onclick = function () {
                     if (dropdown) {
@@ -50,26 +51,25 @@ function getMessages() {
                         dropdown = createDiv('dropdown', 'dropdown-menu');
                         const deleteMsg = createDiv('delete_msg', 'dropdown');
                         const editMsg = createDiv('edit_msg', 'dropdown');
-                        
+
                         dropdown.appendChild(deleteMsg);
-                        explanations('icon');
                         if (message.senderId == USER_ID) {
                             dropdown.appendChild(editMsg);
                         }
                         msg.appendChild(dropdown);
-                        
+
                         deleteMsg.onclick = function () {
                             if (confirm('Are you sure that you want delete msg ' + m + ' ?')) {
                                 myHttp.sendHttp('messages/' + message.id, 'DELETE');
                                 getMessages();
                             }
                         };
-                        
+
                         editMsg.onclick = function () {
                             writerText.value = m;
                             editMessage = message;
                         };
-                        setLanguage();  
+                        setLanguage();
                     }
                 };
                 phone.appendChild(msg);
@@ -84,20 +84,31 @@ function getMessages() {
             phone.appendChild(msg);
         }
     }
+
+    setEnterButton();
+
+    // icon.onclick = function () {
+    //     if (dropdown.classList.contains('hide')) {
+    //         dropdown.classList.add('show');
+    //         dropdown.classList.remove('hide');
+    //     } else {
+    //         dropdown.classList.remove('hide');
+    //         dropdown.classList.add('show');
+    //     }
+    // };
+
+
     send.onclick = function () {
         sendMessage(writerText.value, USER_ID, receiverId, editMessage);
     }
 
-    send.enter = function () {
-        sendMessage(writerText.value, USER_ID, receiverId, editMessage);
-    }
-    explanations('send', 'log-out', 'back');
+    explanations('send', 'log-out', 'back', 'language');
 };
 
 function sendMessage(text, senderId, receiverId, editMessage) {
     const message = new Message(text, senderId, receiverId, editMessage?.dateTime, editMessage?.date, editMessage?.id);
-    const method = editMessage? 'PUT'  : 'POST';
-    const msgId = editMessage? editMessage.id : '';
+    const method = editMessage ? 'PUT' : 'POST';
+    const msgId = editMessage ? editMessage.id : '';
     console.log(message);
     jsonMsg = JSON.stringify(message);
     myHttp.sendHttp("messages/" + msgId, method, jsonMsg);
@@ -112,11 +123,11 @@ function connect() {
     let stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         console.log('Connected');
-        stompClient.send("/app/hello", {}, JSON.stringify({'name': "Avraham"}));
+        stompClient.send("/app/hello", {}, JSON.stringify({ 'name': "Avraham" }));
         stompClient.subscribe('/topic/greetings', function (greeting) {
             const body = greeting.body;
             response = JSON.parse(body);
-            if (response && response.id == getStorItems('userId')){
+            if (response && response.id == getStorItems('userId')) {
                 notificationMessage(response);
                 getMessages();
             }
@@ -128,7 +139,7 @@ function connect() {
 function notificationMessage(response) {
     if (!response.id) return;
     let audio = new Audio('../images/ping_ping.mp3');
-        audio.play();
+    audio.play();
     if (!window.Notification) {
         console.log('Browser does not support notifications.');
     } else {
@@ -149,7 +160,7 @@ function notificationMessage(response) {
         // check if permission is already granted
         if (Notification.permission === 'granted') {
             // show notification here
-            var notify = new Notification(response.user.username , {
+            var notify = new Notification(response.user.username, {
                 body: '\n' + action + '\n' + response.text,
                 icon: '../images/avraham_shor_profile.jpg',
             });
@@ -158,7 +169,7 @@ function notificationMessage(response) {
             Notification.requestPermission().then(function (p) {
                 if (p === 'granted') {
                     // show notification here
-                    var notify = new Notification(response.user.username , {
+                    var notify = new Notification(response.user.username, {
                         body: '\n' + action + '\n' + response.text,
                         icon: 'https://bit.ly/2DYqRrh',
                     });
@@ -170,4 +181,23 @@ function notificationMessage(response) {
             });
         }
     }
+}
+
+function setEnterButton() {
+    let shiftDown = false;
+    const sendButton = document.getElementById("send");
+    document.onkeypress = function (e) {
+        if (e.keyCode == 13) {
+            if (document.activeElement.id == "writer" && !shiftDown) {
+                e.preventDefault(); // prevent another \n from being entered 
+                sendButton.click();
+            }
+        }
+    };
+    document.onkeydown = function (e) {
+        if (e.keyCode == 16) shiftDown = true;
+    };
+    document.onkeyup = function (e) {
+        if (e.keyCode == 16) shiftDown = false;
+    };
 }
