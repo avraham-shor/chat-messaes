@@ -8,4 +8,11 @@ class MyHttp {
         this.Http.setRequestHeader('Content-Type', 'application/json');
         this.Http.send(body);
     }
+    sendHttpFile(endPoint, type, body) {
+        const url = this.baseUrl + 'users/image/' + endPoint;
+        console.log(url);
+        this.Http.open(type, url);
+        this.Http.send(body);
+    }
+
 }

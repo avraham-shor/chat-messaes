@@ -5,24 +5,30 @@ getUsers();
 
 function getUsers() {
     explanations('log-out', 'back', 'language');
+    localStorage.removeItem('edit-user-id');
     const phone_screen = document.getElementById('phone_screen');
     console.log(USER_ID);
     myHttp.sendHttp('users', "GET");
     myHttp.Http.onreadystatechange = function () {
         if (myHttp.Http.readyState == 4 && myHttp.Http.status == 200) {
             const response = JSON.parse(myHttp.Http.responseText);
-            console.log(response);
             response.forEach(element => {
                 let user = new User();
-                console.log(element);
+                console.log(element.username);
                 user = element;
                 if (user.id == USER_ID) {
                     return;
                 }
-                const member = document.createElement('div');
-                member.className = 'member';
+                const member = createDiv('member', 'member');
                 const img = document.createElement('img');
-                img.src = '../images/pngwing.com (1).png';
+                // testImage(img);
+                // img.src = '../images/pngwing.com (1).png';
+                
+                img.src = '/profiles/' + user.id + '.jpg';
+                img.className = 'profile';
+                // img.onerror = imageNotFound(img);
+                
+                // img.onerror = '../images/pngwing.com (1).png';
                 const listName = document.createElement('div');
                 listName.className = 'name-in-list';
 
@@ -67,6 +73,37 @@ function getUsers() {
         }
     }
 }
+
+function logOut () {
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
+    window.location.href = 'login/login.html';
+}
+
+// function imageNotFound(img) {
+//     console.log(img);
+//     img.src = '../images/pngwing.com (1).png';
+//     img.onerror = null; 
+// }
+
+// const imgs = document.getElementsByTagName("img");
+
+// setTimeout(function() {
+//     for (var i = 0; i < imgs.length; i++) {
+//         console.log(imgs[i]);
+//         imgs[i].onError = imageNotFound(imgs[i]);
+// }
+// }, 3000)
+
+
+
+
+
+
+// for (var i = 0; i < imgs.length; i++) {
+//     console.log(imgs[i]);
+//     imgs[i].onError = imageNotFound(imgs[i]);
+// }
 
 
 window.addEventListener("dblclick", () => {

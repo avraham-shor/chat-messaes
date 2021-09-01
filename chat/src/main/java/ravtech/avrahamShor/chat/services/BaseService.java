@@ -6,11 +6,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 import ravtech.avrahamShor.chat.models.ObjectId;
+
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static ravtech.avrahamShor.chat.Configuration.PATTERN;
+import static ravtech.avrahamShor.chat.Configuration.PROFILES_FOLDER;
 
 
 @Repository
@@ -66,6 +72,29 @@ public abstract class BaseService<T extends ObjectId, U extends MongoRepository<
         return save(obj);
     }
 
+    public ResponseEntity<?> saveAvatar (MultipartFile file , String userId) {
+        if (file == null || userId == null) return new ResponseEntity<>(null, HttpStatus.UNPROCESSABLE_ENTITY);
+        String fileName = file.getOriginalFilename();
+        if (fileName == null) {
+            return new ResponseEntity<>(null, HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+        String endPointFile = fileName.substring(fileName.length() -4);
+
+        try {
+            Path path = Paths.get("");
+            String absolutPath = path.toRealPath().toString();
+
+            File dir = new File(absolutPath + PROFILES_FOLDER);
+            boolean dirCreated = dir.mkdir();
+            File yourFile = new File(absolutPath + PROFILES_FOLDER, userId + endPointFile);
+            yourFile.createNewFile(); // if file already exists will do nothing
+            file.transferTo(new File(yourFile.getPath()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        return new ResponseEntity<>("File uploaded successfully.", HttpStatus.CREATED);
+    }
 
 }
 

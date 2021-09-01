@@ -1,5 +1,7 @@
 
 const myHttp = new MyHttp();
+explanations('send', 'log-out', 'back', 'language');
+
 
 function onSubmit(e) {
     const email = byId('email').value;
@@ -10,6 +12,7 @@ function onSubmit(e) {
     myHttp.sendHttp("users/login", "POST", jsonLoginUser);
     myHttp.Http.onreadystatechange = function () {
         if (myHttp.Http.readyState == 4 && myHttp.Http.status == 200) {
+            console.log(myHttp.Http.responseText);
             let user = new User();
             user = JSON.parse(myHttp.Http.responseText);
             console.log(user.id);
