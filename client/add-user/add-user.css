@@ -109,6 +109,10 @@
     z-index: 2;
 }
 
+.image {
+    max-width: 6rem; 
+}
+
 .error {
     font-size: 1.2rem;
     font-weight: 500;

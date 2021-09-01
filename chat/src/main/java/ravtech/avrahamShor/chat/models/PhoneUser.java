@@ -1,7 +1,10 @@
 package ravtech.avrahamShor.chat.models;
 
 import lombok.*;
+import org.apache.tomcat.jni.File;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+
 
 @Document(collection = "user")
 @Getter
@@ -17,9 +20,9 @@ public class PhoneUser extends User {
         }
     }
 
-    public PhoneUser(String email, String password) {
-        super(email, password);
-    }
+//    public PhoneUser(String email, String password) {
+//        super(email, password);
+//    }
 
     public static boolean validatePhone(String phone) throws NumberFormatException {
         boolean startWithZero = phone.substring(0, 9).startsWith("05");
@@ -37,4 +40,10 @@ public class PhoneUser extends User {
         super();
     }
 
+    @Override
+    public String toString() {
+        return super.toString() +
+                "phone='" + phone + '\'' +
+                '}';
+    }
 }

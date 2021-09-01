@@ -16,6 +16,7 @@ function getMessages() {
     const phone = byId('phone_screen_msg');
     const send = byId('send');
     const writerText = byId('writer');
+    byId('member_img').src = '/profiles/' + receiverId + '.jpg';
     writerText.value = '';
     phone.innerText = '';
     let editMessage;
@@ -119,6 +120,7 @@ function sendMessage(text, senderId, receiverId, editMessage) {
 
 
 function connect() {
+    localStorage.removeItem('edit-user-id');
     var socket = new SockJS(HOST + '8080/gs-guide-websocket');
     let stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
@@ -157,12 +159,14 @@ function notificationMessage(response) {
             default:
                 break;
         }
+        const msgUserId = getStorItems('message_user_id');
+        const body = '\n' + action + '\n' + response.text;
+        const icon = '/profiles/' + response.user.id + '.jpg';
         // check if permission is already granted
         if (Notification.permission === 'granted') {
             // show notification here
-            var notify = new Notification(response.user.username, {
-                body: '\n' + action + '\n' + response.text,
-                icon: '../images/avraham_shor_profile.jpg',
+            const notify = new Notification(response.user.username, {
+                body: body, icon: icon
             });
         } else {
             // request permission from user
@@ -170,8 +174,7 @@ function notificationMessage(response) {
                 if (p === 'granted') {
                     // show notification here
                     var notify = new Notification(response.user.username, {
-                        body: '\n' + action + '\n' + response.text,
-                        icon: 'https://bit.ly/2DYqRrh',
+                        body: body, icon: icon
                     });
                 } else {
                     console.log('User blocked notifications.');
@@ -200,4 +203,10 @@ function setEnterButton() {
     document.onkeyup = function (e) {
         if (e.keyCode == 16) shiftDown = false;
     };
+}
+
+function logOut () {
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
+    window.location.href = '../login/login.html';
 }

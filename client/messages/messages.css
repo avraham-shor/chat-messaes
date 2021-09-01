@@ -63,7 +63,7 @@
     flex: 1 0 auto;
     flex-direction: column-reverse;
     background-color: var(--black4);
-    max-height: 37.1rem !important;
+    height: 37.1rem !important;
     overflow: scroll;
 }
 
@@ -100,8 +100,8 @@
 
 
 .member img {
-    width: 2rem;
-    margin: 0.6rem;
+    width: 4rem;
+    margin: 0.2rem;
     margin-right: 3.5rem;
     
 }

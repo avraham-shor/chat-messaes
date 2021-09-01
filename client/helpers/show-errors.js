@@ -55,6 +55,4 @@ function explanations() {
         description.className = 'description hide';
     });
     };
-    
-    
 }

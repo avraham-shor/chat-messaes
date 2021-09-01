@@ -18,6 +18,7 @@
                     <div class="select non-active" id="login" onclick="location.href = '../login/login.html' ">Login</div>
                     <div class="select active" id="register">Register</div>
                 </div>
+                <!-- <form method="post" id="register-form" enctype="multipart/form-data" action="http://localhost:8080/api/users/image/shor" name="register_form"></form> -->
                 <form method="post" id="register-form">
                     <div class="row">
                         <div>
@@ -30,7 +31,7 @@
 
                     <div class="row">
                         <div>
-                            <label id="email_label" for="email"></label>
+                            <label id="email_label" for="email" dir="auto"></label>
                         </div>
                         <div id="email-box">
                             <input type="text" name="email" id="email" dir="auto">
@@ -38,7 +39,7 @@
                     </div>
                     <div class="row">
                         <div>
-                            <label id="password_label" for="password"></label>
+                            <label id="password_label" for="password" dir="auto"></label>
                         </div>
                         <div>
                             <input type="password" name="password" id="password" dir="auto">
@@ -46,13 +47,22 @@
                     </div>
                     <div class="row">
                         <div>
-                            <label id="r_phone_label" for="phone"></label>
+                            <label id="r_phone_label" for="phone" dir="auto"></label>
                         </div>
                         <div>
                             <input type="text" name="phone" id="phone" dir="auto">
                         </div>
+                        <div>
+                            <label id="r_profile_label" for="profile" dir="auto">בחר תמונת פרופיל</label>
+                        </div>
+                        <div>
+                                <input type="file" name="profile" id="profile">
+                        </div>
+                        <img id="image" class="image"  alt="עדיין לא העלת את התמונה">
                     </div>
                     <button type="button" id="submit" onclick="onSubmit()">Submit</button>
+                    <button type="button" style="display: none;" id="next" onclick="goToHomePage()">Next</button>
+                    
                 </form>
             </div>
             <div class="phone_button"></div>

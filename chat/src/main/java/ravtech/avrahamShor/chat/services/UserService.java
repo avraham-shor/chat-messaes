@@ -5,8 +5,15 @@ import lombok.EqualsAndHashCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import ravtech.avrahamShor.chat.db.UserRepository;
 import ravtech.avrahamShor.chat.models.PhoneUser;
+
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @EqualsAndHashCode(callSuper = true)
 @Service
