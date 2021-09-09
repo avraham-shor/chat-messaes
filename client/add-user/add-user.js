@@ -11,7 +11,7 @@ function onSubmit(e) {
 
     
     if (!isAllValues(username, email, password, phone, file)) {
-        printError('register-form', 'One or more values is missing!');
+        printError('register-form', MISSING_VALUES);
         return;
     }
     
@@ -55,7 +55,7 @@ function onSubmit(e) {
             }
         }
         else {
-            printError('email-box', 'the email is exists in the system!');
+            printError('email-box', EMAIL_EXISTS);
         }
     }
 

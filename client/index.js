@@ -6,6 +6,8 @@ getUsers();
 function getUsers() {
     explanations('log-out', 'back', 'language');
     localStorage.removeItem('edit-user-id');
+    localStorage.removeItem('message_user_id');
+    localStorage.removeItem('message_user_name');
     const phone_screen = document.getElementById('phone_screen');
     console.log(USER_ID);
     myHttp.sendHttp('users', "GET");
@@ -54,19 +56,27 @@ function getUsers() {
                     member.appendChild(dropdown);
                     setLanguage();
                     deleteUser.addEventListener('click', function () {
-                        if (confirm('Are you sure that you want delete user ' + name + ' ?')) {
+                        if (window.location.hostname != "localhost" && user.id != getStorItems('userId')) {
+                            alert(NO_PERMISSIONS);
+                        }
+                        else if (confirm(YOU_SURE_USER + name + ' ?')) {
                             myHttp.sendHttp('users/' + user.id, 'DELETE');
                             window.location.reload();
                         }
                     });
                     
                     editUser.addEventListener('click', function () {
-                        setStorItems('edit-user-id', user.id);
-                        setStorItems('edit-user-username', user.username);
-                        setStorItems('edit-user-email', user.email);
-                        setStorItems('edit-user-password', user.password);
-                        setStorItems('edit-user-phone', user.phone);
-                        location.href = "add-user/add-user.html";
+                        if (window.location.hostname != "localhost") {
+                            alert(NO_PERMISSIONS);
+                        }
+                        else {
+                            setStorItems('edit-user-id', user.id);
+                            setStorItems('edit-user-username', user.username);
+                            setStorItems('edit-user-email', user.email);
+                            setStorItems('edit-user-password', user.password);
+                            setStorItems('edit-user-phone', user.phone);
+                            location.href = "add-user/add-user.html";
+                        }
                     });
                 });
             });

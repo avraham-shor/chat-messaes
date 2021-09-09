@@ -1,8 +1,13 @@
 const LOCAL = true;
 
 const PORT = LOCAL ? '8080' : '8081';
-const HOST = window.location.host.slice(0, -2);
-const BASE_URL =  'http://' + HOST + PORT + '/api/';
+const HOST = window.location.hostname;
+const BASE_URL =  'http://' + HOST + ':' + PORT + '/api/';
+if (localStorage.getItem('isHebrew') == null) {
+    setStorItems('isHebrew', true);
+}
+
+let isHebrew = getStorItems('isHebrew');
 let startTargetPath = '';
 if (!window.location.href.includes('index')) {
     startTargetPath = '../';
@@ -13,15 +18,22 @@ loginOrRegister = window.location.href.includes('login') || window.location.href
 if (!loginOrRegister && !getStorItems('userId')) {
     location.href = startTargetPath + 'login/login.html';
 }
-let isHebrew = true;
 
 
-const SENT = !isHebrew ? 'send to you a message:' : 'שלך לך הודעה:';
-const DELETED = !isHebrew ? ' deleted the message:' : 'מחק את ההודעה:';
-const EDIT = !isHebrew ? ' edit the message:' : 'ערך את ההודעה:';
+
+const SENT = getStorItems('isHebrew') == 'false' ? 'send to you a message:' : 'שלך לך הודעה:';
+const DELETED = getStorItems('isHebrew') == 'false' ? ' deleted the message:' : 'מחק את ההודעה:';
+const EDIT = getStorItems('isHebrew') == 'false' ? ' edit the message:' : 'ערך את ההודעה:';
+const MISSING_VALUES = getStorItems('isHebrew') == 'false' ? 'One or more values is missing!' : 'אחד או יותר מהפרטים חסרים';
+const EMAIL_EXISTS = getStorItems('isHebrew') == 'false' ? 'the email is exists in the system!' : 'המייל הזה כבר מופיע במערכת';
+const YOU_SURE_USER = getStorItems('isHebrew') == 'false' ? 'Are you sure that you want delete user ' : 'האם אתה בטוח שברצונך למחוק את המשתמש ';
+const YOU_SURE_MSG = getStorItems('isHebrew') == 'false' ? 'Are you sure that you want delete msg ' : 'האם אתה בטוח שברצונך למחוק את ההודעה ';
+const NO_PERMISSIONS = getStorItems('isHebrew') == 'false' ? 'You do not have permission to perform this operation!' : 'אין לך הרשאה לבצע את הפעולה!';
+
 
 function changeLanguage() {
-    isHebrew = !isHebrew;
+    setStorItems('isHebrew', getStorItems('isHebrew') == 'false');
+    // isHebrew = !isHebrew;
 }
 
 setLanguage();
@@ -50,12 +62,7 @@ function setLanguage() {
 
  for (const element of labels) {
     if (byId(element.id)){
-        byId(element.id).innerText = isHebrew? element.header[1] : element.header[0];
+        byId(element.id).innerText = getStorItems('isHebrew') == 'true' ? element.header[1] : element.header[0];
     }
   }
-//   document.getElementsByClassName('dropdown').innerText = 'AAAAAAAAAAAAA'
-
-  
-
-
 }

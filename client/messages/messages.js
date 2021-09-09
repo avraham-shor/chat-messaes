@@ -60,7 +60,7 @@ function getMessages() {
                         msg.appendChild(dropdown);
 
                         deleteMsg.onclick = function () {
-                            if (confirm('Are you sure that you want delete msg ' + m + ' ?')) {
+                            if (confirm(YOU_SURE_MSG + m + ' ?')) {
                                 myHttp.sendHttp('messages/' + message.id, 'DELETE');
                                 getMessages();
                             }
